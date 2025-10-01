@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deuses da Mitologia</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#222">
+  <style>
+    /* ===== CSS simples ===== */
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 { text-align: center; }
+    .filtros button {
+      margin: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .card {
+      background: #222;
+      padding: 10px;
+      border-radius: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>⚡ Deuses Gregos e Nórdicos ⚡</h1>
+
+  <!-- Botões de filtro -->
+  <div class="filtros">
+    <button onclick="mostrarTodos()">Todos</button>
+    <button onclick="filtrar('grego')">Gregos</button>
+    <button onclick="filtrar('nordico')">Nórdicos</button>
+  </div>
+
+  <!-- Onde os cards vão aparecer -->
+  <div class="grid" id="grid"></div>
+
+  <script>
+    // ===== Dados dos deuses =====
+    const deuses = [
+      {nome: "Zeus", tipo: "grego", desc: "Deus dos céus e do trovão."},
+      {nome: "Atena", tipo: "grego", desc: "Deusa da sabedoria e da guerra estratégica."},
+      {nome: "Nyx", tipo: "grego", desc: "Deusa Primordial e personificação da Noite."},
+      {nome: "Ódin", tipo: "nordico", desc: "Pai de todos, deus da sabedoria."},
+      {nome: "Hela", tipo: "nordico", desc: "Governante do Reino dos Mortos e  A Que Divide."},
+      {nome: "Freya", tipo: "nordico", desc: "Deusa do amor e da magia."}
+    ];
+
+    const grid = document.getElementById("grid");
+
+    // Função para mostrar todos os deuses
+    function mostrarTodos() {
+      renderizar(deuses);
+    }
+
+    // Função para filtrar pelo tipo
+    function filtrar(tipo) {
+      const filtrados = deuses.filter(d => d.tipo === tipo);
+      renderizar(filtrados);
+    }
+
+    // Função que cria os cards
+    function renderizar(lista) {
+      grid.innerHTML = ""; // limpa a tela
+      lista.forEach(d => {
+        grid.innerHTML += `
+          <div class="card">
+            <h3>${d.nome}</h3>
+            <p>${d.desc}</p>
+            <small>${d.tipo.toUpperCase()}</small>
+          </div>
+        `;
+      });
+    }
+
+    // Quando abrir o site, mostra todos
+    mostrarTodos();
+
+    // Registrar o service worker (precisa estar rodando em servidor)
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js");
+    }
+  </script>
+</body>
+</html>
